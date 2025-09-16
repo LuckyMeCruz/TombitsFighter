@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetPayter - Character Select</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1 class="title">PLAYER SELECT</h1>
+        </header>
+
+        <main class="stage" id="selectScreen">
+            <section class="portrait left">
+                <div class="portrait-frame">
+                    <img id="p1Portrait" src="assets/placeholders/placeholder.png" alt="Player 1 portrait">
+                </div>
+                <div class="nameplate nameplate-p1" id="p1Name">1P</div>
+                <button id="p1Confirm" class="confirm-btn confirm-p1" disabled>CONFIRM (F)</button>
+            </section>
+
+            <section class="map">
+                <div class="map-oval" aria-hidden="true"></div>
+            </section>
+
+            <section class="portrait right">
+                <div class="portrait-frame">
+                    <img id="p2Portrait" src="assets/placeholders/placeholder.png" alt="Player 2 portrait">
+                </div>
+                <div class="nameplate nameplate-p2" id="p2Name">2P</div>
+                <button id="p2Confirm" class="confirm-btn confirm-p2" disabled>CONFIRM (Enter)</button>
+            </section>
+
+            <section class="roster" id="roster" aria-label="Character roster" role="grid">
+                <!-- Roster thumbnails -->
+                <button class="tile" role="gridcell" data-id="ryu" aria-label="Ryu">
+                    <img src="assets/placeholders/ryu.png" alt="Ryu" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="ken" aria-label="Ken">
+                    <img src="assets/placeholders/ken.png" alt="Ken" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="chunli" aria-label="Chun-Li">
+                    <img src="assets/placeholders/chunli.png" alt="Chun-Li" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="guile" aria-label="Guile">
+                    <img src="assets/placeholders/guile.png" alt="Guile" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="blanka" aria-label="Blanka">
+                    <img src="assets/placeholders/blanka.png" alt="Blanka" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="dhalsim" aria-label="Dhalsim">
+                    <img src="assets/placeholders/dhalsim.png" alt="Dhalsim" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="zangief" aria-label="Zangief">
+                    <img src="assets/placeholders/zangief.png" alt="Zangief" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+                <button class="tile" role="gridcell" data-id="ehonda" aria-label="E. Honda">
+                    <img src="assets/placeholders/ehonda.png" alt="E. Honda" onerror="this.src='assets/placeholders/placeholder.png'">
+                    <span class="cursor cursor-p1" aria-hidden="true"></span>
+                    <span class="cursor cursor-p2" aria-hidden="true"></span>
+                </button>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Arrows = move • Enter/Space = pick • Tab/Q/E = switch P1/P2 • Esc = clear</p>
+        </footer>
+    </div>
+
+    <!-- Audio hooks -->
+    <audio id="bgmSelect" src="assets/audio/bgm/select.mp3" loop preload="auto"></audio>
+    <audio id="sfxMove" src="assets/audio/sfx/move.wav" preload="auto"></audio>
+    <audio id="sfxConfirm" src="assets/audio/sfx/confirm.wav" preload="auto"></audio>
+    <audio id="sfxAnnouncer" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetPayter - Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1 class="title">INSERT COIN</h1>
+        </header>
+
+        <section class="menu" id="menuScreen" aria-label="Main menu">
+            <div class="menu-inner">
+                <div class="logo">TOMBITS PAYTER</div>
+                <div class="menu-text" id="insertCoin">INSERT COIN</div>
+                <div class="credits">CREDITS: <span id="creditCount">0</span></div>
+                <div class="hint">Press C or 5 to insert coin • Enter to Start</div>
+                <div class="hint">P1: WASD + F • P2: Arrows + Enter</div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© Tombits Payter</p>
+        </footer>
+    </div>
+
+    <!-- Audio hooks -->
+    <audio id="bgmMenu" src="assets/audio/bgm/menu.mp3" loop autoplay muted preload="auto"></audio>
+    <audio id="sfxCoin" src="assets/audio/sfx/coin.wav" preload="auto"></audio>
+    <audio id="sfxConfirm" src="assets/audio/sfx/confirm.wav" preload="auto"></audio>
+
+    <script src="menu.js"></script>
+</body>
+</html>
+

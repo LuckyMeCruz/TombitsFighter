@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreetPayter - Versus</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; display: grid; place-items: center; }
+    .versus-stage { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 28px; width: min(1100px, 94%); margin: 0 auto; }
+    .vs-portrait { width: min(420px, 100%); aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.55); border: 3px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.04); }
+    .vs-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .vs-name { text-align: center; margin-top: 10px; color: var(--gold); font-family: "ArcadeSF", "Press Start 2P", system-ui, sans-serif; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+    .vs-label { font-size: clamp(28px, 8vw, 96px); color: #fff; text-shadow: 0 8px 26px rgba(0,0,0,0.6); letter-spacing: 4px; }
+    /* Slide-in animations */
+    .slide-left { transform: translateX(-120%); animation: enterFromLeft 700ms ease-out forwards; }
+    .slide-right { transform: translateX(120%); animation: enterFromRight 700ms ease-out forwards; }
+    @keyframes enterFromLeft { to { transform: translateX(0); } }
+    @keyframes enterFromRight { to { transform: translateX(0); } }
+  </style>
+</head>
+<body>
+  <div class="versus-stage">
+    <div class="vs left">
+      <div class="vs-portrait slide-left"><img id="vsP1" src="assets/placeholders/placeholder.png" alt="P1"></div>
+      <div class="vs-name" id="vsP1Name">1P</div>
+    </div>
+    <div class="vs-label">VS</div>
+    <div class="vs right">
+      <div class="vs-portrait slide-right"><img id="vsP2" src="assets/placeholders/placeholder.png" alt="P2"></div>
+      <div class="vs-name" id="vsP2Name">2P</div>
+    </div>
+  </div>
+
+  <!-- Announcer audio elements -->
+  <audio id="annP1" preload="auto"></audio>
+  <audio id="annVS" src="assets/audio/announcer/versus.wav" preload="auto"></audio>
+  <audio id="annP2" preload="auto"></audio>
+
+  <div id="tapToStart" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);color:#fff;font-family:'Press Start 2P', system-ui,sans-serif;letter-spacing:1px;">
+    <div>PRESS ANY KEY OR CLICK TO CONTINUE</div>
+  </div>
+
+  <script>
+    (function(){
+      // Read selections from query string: ?p1=ryu&p2=ken
+      const params = new URLSearchParams(window.location.search);
+      const p1 = params.get('p1');
+      const p2 = params.get('p2');
+      const nameById = { ryu:'AICNARF', ken:'AICY', chunli:'TL LISTOR', guile:'OH AICY', blanka:'D-VEL AICNARF', dhalsim:'JANNAH', zangief:'PRINCESS AICNARF', ehonda:'RETARD AICNARF' };
+      function setWithFallback(imgEl, id){
+        const portraits = id ? `assets/portraits/${id}.png` : 'assets/placeholders/placeholder.png';
+        const thumb = id ? `assets/placeholders/${id}.png` : 'assets/placeholders/placeholder.png';
+        function trySrc(src, next){
+          imgEl.onerror = function(){ if (next) trySrc(next()); };
+          imgEl.src = src;
+        }
+        trySrc(portraits, () => thumb);
+      }
+      if (p1) { setWithFallback(document.getElementById('vsP1'), p1); document.getElementById('vsP1Name').textContent = nameById[p1]||p1.toUpperCase(); }
+      if (p2) { setWithFallback(document.getElementById('vsP2'), p2); document.getElementById('vsP2Name').textContent = nameById[p2]||p2.toUpperCase(); }
+
+      // Announcer sequence: P1 name -> "versus" -> P2 name
+      const a1 = document.getElementById('annP1');
+      const av = document.getElementById('annVS');
+      const a2 = document.getElementById('annP2');
+      function play(srcEl, src){
+        return new Promise((resolve)=>{
+          srcEl.onended = () => resolve();
+          srcEl.onerror = () => resolve();
+          srcEl.src = src;
+          try { srcEl.currentTime = 0; const p = srcEl.play(); if (p && p.catch) p.catch(()=>resolve()); } catch(_) { resolve(); }
+        });
+      }
+      function fileFor(id){ return `assets/audio/announcer/${id}.wav`; }
+      async function runSequence(){
+        if (p1) { await play(a1, fileFor(p1)); }
+        await play(av, av.src);
+        if (p2) { await play(a2, fileFor(p2)); }
+      }
+      (async function(){
+        try { await runSequence(); } catch(_) {}
+        if (a1.paused && av.paused && a2.paused) {
+          const overlay = document.getElementById('tapToStart');
+          overlay.style.display = 'flex';
+          const start = async () => { overlay.remove(); await runSequence(); cleanup(); };
+          function cleanup(){
+            document.removeEventListener('keydown', start);
+            document.removeEventListener('pointerdown', start);
+            document.removeEventListener('click', start);
+          }
+          document.addEventListener('keydown', start, { once:true });
+          document.addEventListener('pointerdown', start, { once:true });
+          document.addEventListener('click', start, { once:true });
+        }
+      })();
+      // Auto-continue after short delay (optional)
+      // setTimeout(()=>{ window.location.href = 'menu.html'; }, 3000);
+    })();
+  </script>
+</body>
+</html>
+
